@@ -50,11 +50,33 @@ for (var i = 0; i< topics.length; i++) {
            var TopicImg = $("<img>");
 
           TopicImg.attr("src", results[i].images.fixed_height.url);
-
+          TopicImg.attr('data-still', results[i].images.fixed_height_still.url);
+	     TopicImg.attr('data-animate', results[i].images.fixed_height.url);
+	     TopicImg.attr('data-state', 'still');
+        TopicImg.addClass("start");
          topicDiv.prepend(p);
          topicDiv.prepend(TopicImg);
+         
 
            $("#gifs-appear-here").prepend(topicDiv);
+        
+           $('.start').on('click', function(){
+
+	    	
+	        var state = $(this).attr('data-topics'); 
+            console.log(state);
+	     
+            if ( state == 'still'){
+                $(this).attr('src', $(this).data('animate'));
+                $(this).attr('data-topics', 'animate');
+            }else{
+                $(this).attr('src', $(this).data('still'));
+                $(this).attr('data-topics', 'still');
+        
+            }
+           
+	    });
+           
         }
       });
 
