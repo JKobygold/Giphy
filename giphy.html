@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+
+<body>
+<div id ="button_here">
+</div>
+<div id="gifs-appear-here">
+</div>
+
+
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  var topics = ["astonomy","physics","neuroscience","history","math","psychology"];
+
+
+for (var i = 0; i< topics.length; i++) {
+    
+   var topic_button = $("<button>");
+    topic_button.attr("data-topics",topics[i]);
+    topic_button.text(topics[i]);
+    $("#button_here").append(topic_button);
+   }
+
+   $("button").on("click", function() {
+      var subject = $(this).attr("data-topics");
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+      subject + "&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10";
+
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+
+      .then(function(response) {
+
+        console.log(queryURL);
+
+        console.log(response);
+          
+        var results = response.data;
+
+        for (var i = 0; i < results.length; i++) {
+            var topicDiv = $("<div>");
+
+            var p = $("<p>").text("Rating: " + results[i].rating);
+
+           var TopicImg = $("<img>");
+
+          TopicImg.attr("src", results[i].images.fixed_height.url);
+
+         topicDiv.prepend(p);
+         topicDiv.prepend(TopicImg);
+
+           $("#gifs-appear-here").prepend(topicDiv);
+        }
+      });
+
+      });
+
+
+   </script>
+ 
+</body>
+
+</html>
